@@ -61,7 +61,16 @@ const getTemporaryCredentials = (config, callback) => {
     });
 };
 
+const writeShellConfigSync = (fileName, config) => {
+    var sh = 
+       `export AWS_ACCESS_KEY_ID=${config.Credentials.AccessKeyId}\n` +
+       `export AWS_SECRET_ACCESS_KEY=${config.Credentials.SecretAccessKey}\n` +
+       `export AWS_SESSION_TOKEN=${config.Credentials.SessionToken}\n`;
+    fs.writeFileSync(fileName, sh, {encoding:'utf-8'});
+
+};
 
 module.exports = {
-    getTemporaryCredentials: getTemporaryCredentials
+    getTemporaryCredentials: getTemporaryCredentials,
+    writeShellConfigSync: writeShellConfigSync
 };
