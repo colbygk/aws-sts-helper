@@ -58,6 +58,20 @@ sts.getTemporaryCredentials({
     }
 
     console.log('temp:',temp);
-    sts.writeShellConfigSync("aws-temp-credentials.sh", JSON.parse(temp));
+    sts.writeShellConfigSync("aws-temp-credentials.sh", temp);
+});
+```
+
+```javascript
+const sts = require('aws-sts-helper');
+
+// Assumes all setup is in environment
+sts.getTemporaryCredentials({}, (err, temp) => {
+    if (err) {
+        console.log('err:',err);
+        process.exit(-1);
+    }
+
+    console.log('Credentials expired:',sts.credentialsExpired(temp));
 });
 ```
