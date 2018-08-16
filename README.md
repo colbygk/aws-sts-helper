@@ -28,11 +28,15 @@ Available variables and their usage:
 
 These values can be passed either in the environment or in a configuration object, with environment variables overriding any passed in configuration.
 
+#### Caching
+By default, if credentials are successfully returned from the AWS STS, they will be written to the local filesystem. You can turn this behavior off by setting `cache: false` in the options map.
+
 ```javascript
 const sts = require('aws-sts-helper');
 
 sts.getTemporaryCredentials({
     {
+        cache: true,
         credentials: {
             fileName: './.aws-sts.json',
             mode: 0o600

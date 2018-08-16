@@ -14,6 +14,7 @@ const credentialsExpired = c => {
 
 const getTemporaryCredentials = (config, callback) => {
     defaults(config, {
+        cache: true,
         credentials: {
             fileName: process.env.AWS_STS_FILE_NAME || './.aws-sts.json',
             mode: parseInt(process.env.AWS_STS_FILE_MODE, 8) || 0o600,
@@ -42,18 +43,22 @@ const getTemporaryCredentials = (config, callback) => {
                 DurationSeconds: config.role.durationSeconds
             }, (err, newCredentials) => {
                 if (err) return callback(err, null);
-                fs.writeFile(
-                    config.credentials.fileName,
-                    JSON.stringify(newCredentials),
-                    {
-                        mode: config.credentials.mode,
-                        encoding: 'utf-8'
-                    },
-                    err => {
-                        if (err) return callback(err, null);
-                        return callback(null, JSON.parse(newCredentials));
-                    }
-                );
+                if (config.cache) {
+                    fs.writeFile(
+                        config.credentials.fileName,
+                        JSON.stringify(newCredentials),
+                        {
+                            mode: config.credentials.mode,
+                            encoding: 'utf-8'
+                        },
+                        err => {
+                            if (err) return callback(err, null);
+                            return callback(null, newCredentials);
+                        }
+                    );
+                } else {
+                    return callback(null, newCredentials);
+                }
             });
         } else {
             return callback(null, old);
