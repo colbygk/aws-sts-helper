@@ -54,10 +54,6 @@ sts.getTemporaryCredentials({
     }
 
     console.log('temp:',temp);
-    var sh = 
-       `export AWS_ACCESS_KEY_ID=${temp.Credentials.AccessKeyId}\n` +
-       `export AWS_SECRET_ACCESS_KEY=${temp.Credentials.SecretAccessKey}\n` +
-       `export AWS_SESSION_TOKEN=${temp.Credentials.SessionToken}\n`;
-    fs.writeFileSync("aws-temp-credentials.sh", sh, {encoding:'utf-8'});
+    sts.writeShellConfigSync("aws-temp-credentials.sh", JSON.parse(temp));
 });
 ```
