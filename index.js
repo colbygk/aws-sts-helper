@@ -77,5 +77,6 @@ const writeShellConfigSync = (fileName, config) => {
 
 module.exports = {
     getTemporaryCredentials: getTemporaryCredentials,
-    writeShellConfigSync: writeShellConfigSync
+    writeShellConfigSync: writeShellConfigSync,
+    credentialsExpired: credentialsExpired
 };
