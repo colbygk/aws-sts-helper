@@ -56,7 +56,7 @@ const getTemporaryCredentials = (config, callback) => {
                 );
             });
         } else {
-            return callback(null, JSON.parse(old));
+            return callback(null, old);
         }
     });
 };
