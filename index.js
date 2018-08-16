@@ -1,6 +1,6 @@
 const aws = require('aws-sdk');
 const fs = require('fs');
-const defaults = require('lodash').defaults;
+const defaults = require('lodash').defaultsDeep;
 
 const credentialsExpired = c => {
     if (c && c.Credentials) {
